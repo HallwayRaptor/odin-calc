@@ -11,35 +11,38 @@
 <body>
   <div id="calculator">
     <div id="calc-body">
-      <div id="calc-screen"></div>
+      <div class="calc-screen">
+      <div data-prev id="calc-screen-prev"></div>
+      <div data-current id="calc-screen-current">0</div>
+      </div>
       <div id="calc-buttons"></div>
       <div class="row-zero">
-        <button value="clear" id="clear">C</button>
-        <button value="backspace" id="backspace">⌫</button>
+        <button data-clear>C</button>
+        <button data-backspace>⌫</button>
       </div>
       <div class="row-one">
-        <button value="7" id="seven">7</button>
-        <button value="8" id="eight">8</button>
-        <button value="9" id="nine">9</button>
-        <button value="/" id="divide">/</button>
+        <button data-number>7</button>
+        <button data-number>8</button>
+        <button data-number>9</button>
+        <button data-operator>/</button>
       </div>
       <div class="row-two">
-        <button value="4" id="four">4</button>
-        <button value="5" id="five">5</button>
-        <button value="6" id="six">6</button>
-        <button value="*" id="multiply">×</button>
+        <button data-number>4</button>
+        <button data-number>5</button>
+        <button data-number>6</button>
+        <button data-operator>*</button>
       </div>
       <div class="row-three">
-        <button value="1" id="one">1</button>
-        <button value="2" id="two">2</button>
-        <button value="3" id="three">3</button>
-        <button value ="-" id="subtract">-</button>
+        <button data-number >1</button>
+        <button data-number>2</button>
+        <button data-number>3</button>
+        <button data-operator>-</button>
       </div>
       <div class="row-four">
-        <button value="0" id="zero">0</button>
-        <button value="." id="dot">.</button>
-        <button value="=" id="equals">=</button>
-        <button value="+" id="add">+</button>
+        <button data-number>0</button>
+        <button data-number>.</button>
+        <button data-equals>=</button>
+        <button data-operator>+</button>
       </div>
     </div>
   </div>

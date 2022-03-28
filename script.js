@@ -1,4 +1,69 @@
-let screenValue = 0;
+class Calculator {
+  constructor(prevScreen, currentScreen) {
+    this.prevScreen = prevScreen
+    this.currentScreen = currentScreen
+    this.clear()
+  }
+  clear(){
+    this.currentOp = '';
+    this.prevOp = '';
+    this.operation = undefined;
+  }
+  backspace(){
+    this.currentOp = this.currentOp.toString().slice(0, -1)
+  }
+  appendNum(num){
+    if (num === '.' && this.currentOp.includes('.')) return
+    this.currentOp = this.currentOp.toString() + num.toString()
+  }
+  selectOp(operation){
+    if(this.currentOp === '') return
+    if(this.prevOp !== '') {
+      this.calc()
+    }
+    this.operation = operation
+    this.prevOp = this.currentOp
+    this.currentOp = ''
+  }
+  calc(){
+    let compute
+    const prev = parseFloat(this.prevOp)
+    const current = parseFloat(this.currentOp)
+    if (isNaN(prev) || isNaN(current)) return
+    switch (this.operation) {
+      case '+':
+        compute = prev + current
+        break
+      case '-':
+        compute = prev - current
+        break
+      case '*':
+        compute = prev * current
+        break
+      case '/':
+        compute = prev / current
+        break
+      default: 
+        return
+    }
+    this.currentOp = compute
+    this.operation = undefined
+    this.prevOp = ''
+  }
+  updateScreen(){
+    this.currentScreen.innerText = this.currentOp
+    if (this.operation != null) {
+      this.prevScreen.innerText = `${this.prevOp} ${this.operation}`
+    } else {
+      this.prevOp.innerText = ''
+    }
+
+
+
+  }
+}
+
+
 
 
 //add numbers
@@ -17,41 +82,41 @@ console.log(`divide 40 by 8 = ${divide(40,8)}`)
 const operate = (op, num1, num2) => op(num1, num2)
 console.log(`use divide function on 6 and 2 to get ${operate(divide,6,2)})`)
 
-const clearScreen = () => {
-  calcScreen.textContent = 0;
-}
-const addToScreen = () => {
-  calcScreen.textContent == 0 ? calcScreen.textContent = screenValue : calcScreen.textContent += screenValue
-}
-const addItem = (item) => screenValue = item;
+const currentScreen = document.querySelector('[data-current')
+const prevScreen = document.querySelector('[data-prev')
+const btnNumbers = document.querySelectorAll('[data-number]')
+const btnOperator = document.querySelectorAll('[data-operator]')
+const btnEquals = document.querySelector('[data-equals]')
+const btnClear = document.querySelector('[data-clear]')
+const btnBackspace = document.querySelector('[data-backspace]')
 
-const calcScreen = document.getElementById('calc-screen')
+const calculator = new Calculator(prevScreen, currentScreen)
 
-const buttons = Array.from(document.querySelectorAll('button'))
-console.log(buttons);
+btnNumbers.forEach(button => {
+  button.addEventListener('click', () => {
+    calculator.appendNum(button.innerText)
+    calculator.updateScreen()
+  })
+})
 
-const btnClear = buttons[0]
+btnOperator.forEach(button => {
+  button.addEventListener('click', () => {
+    calculator.selectOp(button.innerText)
+    calculator.updateScreen()
+  })
+})
 
-btnClear.addEventListener('click', clearScreen)
+btnEquals.addEventListener('click', button => {
+  calculator.calc()
+  calculator.updateScreen()
+})
 
-const btnClick = () => {
-  buttons.forEach(btn => {
-    btn.addEventListener('click', function() {
-      switch (btn.value) {
-        case 'clear': clearScreen;
-        break;
-        case '*': ;
-        case '/': ;
-        case '-': ;
-        case '+': ;
-        case '=': ;
-        default:
-          addItem(btn.value)
-          addToScreen();
-      }
-    })
-  });
-}
+btnClear.addEventListener('click', button => {
+  calculator.clear()
+  calculator.updateScreen()
+})
 
-addToScreen();
-btnClick();
+btnBackspace.addEventListener('click', button => {
+  calculator.backspace()
+  calculator.updateScreen()
+})
